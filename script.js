@@ -1,10 +1,10 @@
 let video = document.getElementById("video");
 // Hacks for Mobile Safari
-video.setAttribute("playsinline", true);
-video.setAttribute("controls", true);
-setTimeout(() => {
-    video.removeAttribute("controls");
-});
+// video.setAttribute("playsinline", true);
+// video.setAttribute("controls", true);
+// setTimeout(() => {
+//     video.removeAttribute("controls");
+// });
 const setupCamera = () => {
     navigator.mediaDevices
       .getUserMedia({
