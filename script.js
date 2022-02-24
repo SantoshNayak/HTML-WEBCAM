@@ -73,5 +73,5 @@ const setupCamera = () => {
     // document.getElementById("upscoreThreshold").innerHTML =upValue;
     // document.getElementById("downscoreThreshold").innerHTML =downValue;
   
-    setInterval(detectPose, fps);
+    // setInterval(detectPose, fps);
   });
