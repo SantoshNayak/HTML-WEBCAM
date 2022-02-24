@@ -1,4 +1,5 @@
 let video = document.getElementById("video");
+video.setAttribute("playsinline", true);
 
 const setupCamera = () => {
     navigator.mediaDevices
