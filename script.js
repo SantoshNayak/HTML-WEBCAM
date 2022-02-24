@@ -67,13 +67,13 @@ const setupCamera = () => {
       detectorConfig
     );
   
-    // document.getElementById("loadingText").innerHTML =
-    //   "Please stand in front of camera";
+    document.getElementById("loadingText").innerHTML =
+      "Please stand in front of camera";
   
     // document.getElementById("upscoreThreshold").innerHTML =upValue;
     // document.getElementById("downscoreThreshold").innerHTML =downValue;
   
-    // setInterval(detectPose, fps);
+    setInterval(detectPose, fps);
   });
 
 
