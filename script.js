@@ -75,3 +75,112 @@ const setupCamera = () => {
   
     // setInterval(detectPose, fps);
   });
+
+
+  function distanceBetweenTwo(x2, x1, y2, y1) {
+    var a = x2 - x1;
+    var b = y2 - y1;
+  
+    return Math.sqrt(a * a + b * b);
+  }
+  
+
+  const detectPose = async () => {
+    // alert(document.getElementById("video").offsetWidth)
+    const poses = await detector.estimatePoses(document.querySelector("video"));
+  
+    // const predictions = await model.estimateHands(document.querySelector("video"));
+    console.log(poses);
+  
+    // temporary area
+    if (poses.length) {
+      let left_hip = poses[0].keypoints.find((x) => x.name == "left_hip");
+      let left_knee = poses[0].keypoints.find((x) => x.name == "left_knee");
+  
+      let right_hip = poses[0].keypoints.find((x) => x.name == "right_hip");
+      let right_knee = poses[0].keypoints.find((x) => x.name == "right_knee");
+  
+      if (
+        left_hip.score > 0.5 &&
+        left_knee.score > 0.5 &&
+        right_knee.score > 0.5 &&
+        right_hip.score > 0.5
+      ) {
+        document.getElementById("message").innerHTML =
+          "We are good to count Squarts now ";
+  
+        var rightKneeAndHipDistance = distanceBetweenTwo(
+          right_knee.x,
+          right_hip.x,
+          right_knee.y,
+          right_hip.y
+        );
+  
+        // var rightKneeAndAnkleDistance = distanceBetweenTwo(
+        //   right_knee.x,
+        //   right_ankle.x,
+        //   right_knee.y,
+        //   right_ankle.y
+        // );
+  
+        // document.getElementById(
+        //   "rightKneeAndHipDistance"
+        // ).innerHTML = rightKneeAndHipDistance;
+  
+        if (rightKneeAndHipDistance > thresholdRightKneeAndHipUpDistance) {
+          canCountIncrease = true;
+        }
+        if (
+          rightKneeAndHipDistance <= thresholdRightKneeAndHipDownDistance &&
+          canCountIncrease
+        ) {
+          countValue = countValue + 1;
+          canCountIncrease = false;
+  
+          document.getElementById("countValue").innerHTML = countValue;
+  
+          if (countValue >= targetCount) {
+            document.getElementById("targetAchievedMessage").innerHTML =
+              "🎇 Target Achieved 🎇";
+              console.log(true)
+          }
+        }
+      } else {
+        document.getElementById("message").innerHTML =
+          "We are not able to see your whole body";
+      }
+    }
+  
+    //temporary area
+  
+    // if (poses.length) angleCalculation(poses[0].keypoints);
+    // canvas.width = windowWidth;
+    // canvas.height = windowHeight;
+    ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
+  
+    poses.forEach((eachPose) => {
+      ctx.beginPath();
+      ctx.lineWidth = "4";
+      ctx.strokeStyle = "blue";
+      //  ctx.rect(
+      //   eachPose.keypoints.topLeft[0],
+      //   eachPose.keypoints.topLeft[1],
+      //   eachPose.keypoints.bottomRight[0] -eachPose.keypoints.topLeft[0],
+      //   eachPose.keypoints.bottomRight[1] -eachPose.keypoints.topLeft[1]
+  
+      //  )
+  
+      ctx.fillStyle = "red";
+      eachPose.keypoints.forEach((key, index) => {
+        ctx.fillRect(key.x, key.y, 5, 5);
+  
+        // if(index == 0){
+        //   ctx.moveTo(0, 0);
+        // }
+        // ctx.lineTo(key.x, key.y);
+      });
+      // ctx.lineTo(1,5,5,100,25,20);
+  
+      ctx.stroke();
+    });
+  };
