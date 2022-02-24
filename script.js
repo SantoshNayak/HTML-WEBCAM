@@ -25,7 +25,7 @@ const detectorConfig = {
   var countValue = 0;
 
 
-  
+
 // Hacks for Mobile Safari
 video.setAttribute("playsinline", true);
 video.setAttribute("controls", true);
@@ -67,8 +67,8 @@ const setupCamera = () => {
       detectorConfig
     );
   
-    document.getElementById("loadingText").innerHTML =
-      "Please stand in front of camera";
+    // document.getElementById("loadingText").innerHTML =
+    //   "Please stand in front of camera";
   
     // document.getElementById("upscoreThreshold").innerHTML =upValue;
     // document.getElementById("downscoreThreshold").innerHTML =downValue;
